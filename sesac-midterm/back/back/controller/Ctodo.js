@@ -23,14 +23,20 @@ exports.readOne = async (req, res) => {
       where: { id: id },
     });
     console.log(oneTodo);
-    res.send(oneTodo);
-    if (oneTodo === "") {
-      console.log("oneList err>>", err);
+    if (oneTodo === null) {
+      console.error("oneList err ");
       res.status(500).send({ message: "Todo not found" });
+    } else {
+      res.send(oneTodo);
     }
   } catch (err) {
     console.log("oneList err>>", err);
     res.send({ message: "Todo not found" });
+    console.log("조회내용", oneTodo);
+    // if (oneTodo === null) {
+    //   console.log("oneList err>>", err);
+    //   res.status(500).send({ message: "Todo not found" });
+    // }
   }
 };
 
