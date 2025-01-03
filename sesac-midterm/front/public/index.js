@@ -1,26 +1,38 @@
 /* 1. https://jsonplaceholder.typicode.com/todos 로부터 데이터를 불러와서 추가해주는 함수 getTodos() 선언 */
 // getTodos()는 추후에 HTML DOM 내용이 완전히 로드되었을 때 실행되어야 합니다.
 document.addEventListener("DOMContentLoaded", async function getTodos() {
-  // await axios({
-  //   method: "get",
-  //   url: "https://jsonplaceholder.typicode.com/todos",
-  // }).then((res) => {
-  //   console.log(res.data);
-  //   console.log(res.data[0].title);
-  //   const todoUl = this.documentElement.querySelector(".todoUl");
-  //   console.log(todoUl);
-  //   for (let i = 0; i < res.data.length; i++) {
-  //     const li = document.createElement("li");
-  //     const checkbox = document.createElement("input");
-  //     const deleteButton = document.createElement("button");
-  //     checkbox.type = "checkbox";
-  //     checkbox.value = res.data[i].title;
-  //     deleteButton.textContent = "X";
-  //     console.log(checkbox.value);
-  //     li.append(checkbox, deleteButton);
-  //     todoUl.append(li);
-  //   }
-  // });
+  await axios({
+    method: "get",
+    url: "https://jsonplaceholder.typicode.com/todos",
+  }).then((res) => {
+    console.log(res.data);
+    console.log(res.data[0].title);
+    const todoUl = this.documentElement.querySelector(".todoUl");
+    console.log(todoUl);
+    for (let i = 0; i < 10; i++) {
+      const checkbox = document.createElement("input");
+      const li = document.createElement("li");
+      const text = document.createElement("span");
+      const deleteButton = document.createElement("button");
+      checkbox.type = "checkbox";
+      checkbox.name = "check";
+      text.innerText = res.data[i].title;
+      deleteButton.textContent = "X";
+      console.log(checkbox.value);
+      li.classList.add("li");
+      li.appendChild(checkbox);
+      li.appendChild(text);
+      li.appendChild(deleteButton);
+      todoUl.append(li);
+
+      if (checkbox.checked) {
+        checkbox.classList.add("line");
+      }
+    }
+  });
+});
+document.addEventListener("DOMContentLoaded", () => {
+  const checkbox = document.querySelector("check");
 });
 
 /* 
@@ -35,14 +47,16 @@ function addTodo() {
   const todoUl = document.querySelector(".todoUl");
   const li = document.createElement("li");
   const checkbox = document.createElement("input");
+  const text = document.createElement("span");
   const deleteButton = document.createElement("button");
-
   checkbox.type = "checkbox";
-  checkbox.value = textInput.value.trim();
-  deleteButton.textContent = "X";
+  text.innerText = textInput.value.trim();
+  deleteButton.innerText = "X";
+
   li.classList.add("li");
-  console.log(checkbox.value);
-  li.append(checkbox, deleteButton);
+  li.appendChild(checkbox);
+  li.appendChild(text);
+  li.appendChild(deleteButton);
   todoUl.append(li);
 }
 
